@@ -1,3 +1,4 @@
+-- language: sql
 -- inserção de dados
 use mechanical;
 
