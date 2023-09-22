@@ -1,6 +1,6 @@
-
 use mechanical;
 
+-- displaying total clients
 select count(*) from clients;
 
 -- displaying clients with repair quote prices ​​greater than 100.00
@@ -17,15 +17,15 @@ having repair_quote.Price > 100.00;
 
 -- displaying the number of employees for each gender
 select
-	count(*) as 'Total',
+    count(*) as 'Total',
 case
-	when gender = 'M' then 'Male'
-	when gender = 'F' then 'Female'
+    when gender = 'M' then 'Male'
+    when gender = 'F' then 'Female'
 end as "Gender"
 from
-	employee
+    employee
 group by
-	gender;
+    gender;
     
 -- displaying the number of employees by department
 select
@@ -43,12 +43,12 @@ having
     
 -- displaying clients with their service request
 select
-	clients.idClient,
-	clients.Contact_Name,
-	clients.Contact_Number,
-	service_request.Request_Date,
-	service_request.Descriptions
+    clients.idClient,
+    clients.Contact_Name,
+    clients.Contact_Number,
+    service_request.Request_Date,
+    service_request.Descriptions
 from
-	clients
+    clients
 inner join
 service_request on clients.idClient = service_request.Client_idClient;
