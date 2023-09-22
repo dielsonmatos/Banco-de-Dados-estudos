@@ -1,3 +1,4 @@
+-- language: sql
 use mechanical;
 
 -- displaying total clients
