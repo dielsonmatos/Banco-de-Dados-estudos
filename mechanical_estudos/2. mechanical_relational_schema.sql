@@ -1,98 +1,98 @@
 -- language: sql
 -- criação do banco de dados para o cenário de mecânica
-create database mechanical;
-use mechanical;
+CREATE DATABASE mechanical;
+USE mechanical;
 -- drop database mechanical;
 
 -- create table clients
-create table clients (
-	idClient int not null auto_increment,
-	Contact_Name varchar(45) not null,
-	CPF CHAR(11) not null,
-	contact_Number char(11) not null,
-	Contact_Email varchar(45) null,
-	primary key (idClient)
+CREATE TABLE clients (
+	idClient int NOT NULL auto_increment,
+	Contact_Name varchar(45) NOT NULL,
+	CPF CHAR(11) NOT NULL,
+	contact_Number char(11) NOT NULL,
+	Contact_Email varchar(45) NULL,
+	PRIMARY KEY (idClient)
 );
-alter table clients auto_increment=1;
+ALTER TABLE clients auto_increment=1;
 
 -- create table Vehicle
-create table vehicle (
-	idVehicle int not null auto_increment,
-	Client_idClient int not null,
-	Car_Brand varchar(45) not null,
-	Car_Model varchar(45) not null,
-	License_Plate varchar(8) not null,
-        primary key (idVehicle, Client_idClient),
-	constraint fk_Vehicle_Client1 foreign key (Client_idClient) references clients(idClient)
+CREATE TABLE vehicle (
+	idVehicle int NOT NULL auto_increment,
+	Client_idClient int NOT NULL,
+	Car_Brand varchar(45) NOT NULL,
+	Car_Model varchar(45) NOT NULL,
+	License_Plate varchar(8) NOT NULL,
+        PRIMARY KEY (idVehicle, Client_idClient),
+	CONSTRAINT fk_Vehicle_Client1 FOREIGN KEY (Client_idClient) REFERENCES clients(idClient)
 );
-alter table vehicle auto_increment=1;
+ALTER TABLE vehicle auto_increment=1;
 
 -- create table service_request
-create table service_request (
-	idService_Request int not null auto_increment,
-	Client_idClient int not null,
-	Request_Date date not null,
-	Descriptions varchar(45) not null,
-        primary key (idService_Request, Client_idClient),
-	constraint fk_Service_Request_Client1 foreign key (Client_idClient) references clients(idClient)
+CREATE TABLE service_request (
+	idService_Request int NOT NULL auto_increment,
+	Client_idClient int NOT NULL,
+	Request_Date date NOT NULL,
+	Descriptions varchar(45) NOT NULL,
+        PRIMARY KEY (idService_Request, Client_idClient),
+	CONSTRAINT fk_Service_Request_Client1 FOREIGN KEY (Client_idClient) REFERENCES clients(idClient)
 );
-alter table service_request auto_increment=1;
+ALTER TABLE service_request auto_increment=1;
 
 -- create table Department
-create table department (
-	idDepartment int not null,
-	Department_Name varchar(45) not null,
-        primary key (idDepartment)
+CREATE TABLE department (
+	idDepartment int NOT NULL,
+	Department_Name varchar(45) NOT NULL,
+        PRIMARY KEY (idDepartment)
 );
 
 -- create table employee
-create table employee (
-	idEmployee int not null auto_increment,
-	Department_idDepartment int not null,
-	FirstName_and_LastName varchar(50) not null,
-	Register_Number char(5) not null,
-        Gender ENUM('M', 'F') not null,
-	Hire_Date date not null,
-        Birth_Date date not null,
-        primary key (idEmployee, Department_idDepartment),
-	constraint fk_Employee_Department1 foreign key (Department_idDepartment) references department(idDepartment)
+CREATE TABLE employee (
+	idEmployee int NOT NULL auto_increment,
+	Department_idDepartment int NOT NULL,
+	FirstName_and_LastName varchar(50) NOT NULL,
+	Register_Number char(5) NOT NULL,
+        Gender ENUM('M', 'F') NOT NULL,
+	Hire_Date date NOT NULL,
+        Birth_Date date NOT NULL,
+        PRIMARY KEY (idEmployee, Department_idDepartment),
+	CONSTRAINT fk_Employee_Department1 FOREIGN KEY (Department_idDepartment) REFERENCES department(idDepartment)
 );
-alter table employee auto_increment=1;
+ALTER TABLE employee auto_increment=1;
 
 -- create table task
-create table task (
-	idTask int not null auto_increment,
-	Service_Request_idService_Request int not null, 
-	Task_Name varchar(45) not null,
-	Descriptions varchar(90) null,
-	Task_Status enum('Started', 'Processing', 'Finished') default 'Processing',
-	Dead_Line date not null,
-        primary key (idTask, Service_Request_idService_Request),
-	constraint fk_Task_Service_Request1 foreign key (Service_Request_idService_Request) references service_request(idService_Request)
+CREATE TABLE task (
+	idTask int NOT NULL auto_increment,
+	Service_Request_idService_Request int NOT NULL, 
+	Task_Name varchar(45) NOT NULL,
+	Descriptions varchar(90) NOT NULL,
+	Task_Status enum('Started', 'Processing', 'Finished') DEFAULT 'Processing',
+	Dead_Line date NOT NULL,
+        PRIMARY KEY (idTask, Service_Request_idService_Request),
+	CONSTRAINT fk_Task_Service_Request1 FOREIGN KEY (Service_Request_idService_Request) REFERENCES service_request(idService_Request)
 );
-alter table task auto_increment=1;
+ALTER TABLE task auto_increment=1;
 
 -- create table repair_quote
-create table repair_quote (
-	idRepair_Quote int not null auto_increment,
-        Client_idClient int not null,
-        Department_idDepartment int not null,
-	Price float not null,
-	Start_Date date not null,
-	End_Date date not null,
-	Approved tinyint not null,
-        primary key (idRepair_Quote),
-	constraint fk_Orçamento_Department1 foreign key (Department_idDepartment) references department(idDepartment),
-	constraint fk_Repair_Quote_Client1 foreign key (Client_idClient) references clients(idClient)
+CREATE TABLE repair_quote (
+	idRepair_Quote int NOT NULL auto_increment,
+        Client_idClient int NOT NULL,
+        Department_idDepartment int NOT NULL,
+	Price float NOT NULL,
+	Start_Date date NOT NULL,
+	End_Date date NOT NULL,
+	Approved tinyint NOT NULL,
+        PRIMARY KEY (idRepair_Quote),
+	CONSTRAINT fk_Orçamento_Department1 FOREIGN KEY (Department_idDepartment) REFERENCES department(idDepartment),
+	CONSTRAINT fk_Repair_Quote_Client1 FOREIGN KEY (Client_idClient) REFERENCES clients(idClient)
  );
- alter table repair_quote auto_increment=1;
+ ALTER TABLE repair_quote auto_increment=1;
 
 -- create table employee_task 
-create table employee_task (
-	Employee_idEmployee int not null,
-	Employee_Department_idDepartment int not null,
-	Task_idTask int not null,
-        primary key (Employee_idEmployee, Employee_Department_idDepartment, Task_idTask),
-	constraint fk_Employee_Task_Employee1 foreign key (Employee_idEmployee, Employee_Department_idDepartment) references employee(idEmployee, Department_idDepartment),
-	constraint fk_Employee_Task_Task1 foreign key (Task_idTask) references task(idTask)
+CREATE TABLE employee_task (
+	Employee_idEmployee int NOT NULL,
+	Employee_Department_idDepartment int NOT NULL,
+	Task_idTask int NOT NULL,
+        PRIMARY KEY (Employee_idEmployee, Employee_Department_idDepartment, Task_idTask),
+	CONSTRAINT fk_Employee_Task_Employee1 FOREIGN KEY (Employee_idEmployee, Employee_Department_idDepartment) REFERENCES employee(idEmployee, Department_idDepartment),
+	CONSTRAINT fk_Employee_Task_Task1 FOREIGN KEY (Task_idTask) REFERENCES task(idTask)
 );
