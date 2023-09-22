@@ -1,3 +1,4 @@
+-- language: sql
 -- criação do banco de dados para o cenário de mecânica
 create database mechanical;
 use mechanical;
