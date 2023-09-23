@@ -1,14 +1,4 @@
 *.sql linguist-language=sql
-
-assets/js/terceiros/* linguist-vendored
-jquery.js linguist-vendored=false
-
-project-docs/* linguist-documentation
-docs/formatter.rb linguist-documentation=false
-
-Api.elm linguist-generated=true
-
 *.kicad_pcb linguist-detectable=true
 *.sql linguist-detectable=true
-
 tools/export_bom.py linguist-detectable=false
